@@ -1,4 +1,4 @@
-const faker = require('faker');
+import { faker } from '@faker-js/faker';
 
 const TOTAL_PAGES = 5;
 
@@ -17,21 +17,17 @@ const baseProducts = [
   { name: 'Camiseta Ramones', description: faker.lorem.paragraph(), image_url: 'https://storage.googleapis.com/xesque-dev/challenge-images/camiseta-04.jpg', category: 't-shirts' },
 ]
 
-const allProducts = new Array(TOTAL_PAGES).fill(1).reduce((acc) => {
+export const allProducts = new Array(TOTAL_PAGES).fill(1).reduce((acc) => {
   const products = baseProducts.map(product => ({
     ...product, 
-    id: faker.datatype.uuid(),
-    price_in_cents: faker.datatype.number({
+    id: faker.string.uuid(),
+    price_in_cents: faker.number.int({
       min: 2000,
       max: 10000,
     }),
-    sales: faker.datatype.number(40),
+    sales: faker.number.int(40),
     created_at: faker.date.past()
   })).sort(() => .5 - Math.random());
 
   return [...acc, ...products]
-}, [])
-
-module.exports = {
-  products: allProducts
-}
+}, []);
